@@ -1,9 +1,11 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/StatusBadge";
-import { Download, Package, Calendar, DollarSign } from "lucide-react";
+import { InvoicePreview } from "@/components/InvoicePreview";
+import { Download, Package, Calendar, DollarSign, FileText } from "lucide-react";
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
+import { InvoicePDFGenerator } from "@/lib/pdf-generator";
 
 export interface OrderItem {
   id: string;
@@ -40,19 +42,20 @@ export function OrderCard({ order }: OrderCardProps) {
   const handleDownloadInvoice = async () => {
     setIsDownloading(true);
     
-    // Simulate PDF generation and download
     try {
-      // This would be replaced with actual PDF generation once Supabase is connected
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Generate and download PDF invoice in real-time
+      const pdfGenerator = new InvoicePDFGenerator();
+      await pdfGenerator.downloadPDF(order);
       
       toast({
-        title: "Invoice Downloaded",
-        description: `Invoice for order ${order.orderNumber} has been downloaded successfully.`,
+        title: "Invoice Downloaded Successfully",
+        description: `Invoice for order ${order.orderNumber} has been generated and downloaded.`,
       });
     } catch (error) {
+      console.error('PDF Generation Error:', error);
       toast({
         title: "Download Failed",
-        description: "There was an error downloading your invoice. Please try again.",
+        description: "There was an error generating your invoice. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -89,6 +92,7 @@ export function OrderCard({ order }: OrderCardProps) {
         </div>
         <div className="flex items-center gap-3">
           <StatusBadge status={order.status} />
+          <InvoicePreview order={order} />
           <Button
             variant="download"
             size="sm"
@@ -96,7 +100,7 @@ export function OrderCard({ order }: OrderCardProps) {
             disabled={isDownloading}
           >
             <Download className="h-4 w-4" />
-            {isDownloading ? "Generating..." : "Download Invoice"}
+            {isDownloading ? "Generating..." : "Download"}
           </Button>
         </div>
       </div>
