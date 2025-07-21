@@ -32,6 +32,14 @@ export default {
 					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))'
 				},
+				success: {
+					DEFAULT: 'hsl(var(--success))',
+					foreground: 'hsl(var(--success-foreground))'
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					foreground: 'hsl(var(--warning-foreground))'
+				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
 					foreground: 'hsl(var(--destructive-foreground))'
@@ -51,6 +59,13 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
+				},
+				status: {
+					pending: 'hsl(var(--status-pending))',
+					processing: 'hsl(var(--status-processing))',
+					shipped: 'hsl(var(--status-shipped))',
+					delivered: 'hsl(var(--status-delivered))',
+					cancelled: 'hsl(var(--status-cancelled))'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
